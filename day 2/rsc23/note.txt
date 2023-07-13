@@ -1,0 +1,16 @@
+nvm use #version
+nvm install #version
+rm -Rf #dirName
+license(ISC) => MIT,BSD,GPL(open source start),LGPL
+npx #packageName ( this command use to run package)
+eg. npx http-server .
+
+BUILD PROCESS
+  Module bandler
+    -webpack
+    -babel
+    -eslint
+    ES6 code to js code rebuild
+    JSX code to js code rebuild
+    Optimization
+    Minify
