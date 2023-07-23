@@ -2,9 +2,7 @@ import { useState } from "react";
 import Item from "./Item";
 import Form from "./Form";
 import Header from "./Header";
-import { Container } from "@mui/material";
-import CssBaseline from "@mui/material/CssBaseline";
-
+import { Box, Container, List } from "@mui/material";
 const App = () => {
   const [tasks, setTasks] = useState([
     { _id: 1, subject: "Milk", done: false },
@@ -29,16 +27,16 @@ const App = () => {
     const _id = tasks.length ? tasks[tasks.length - 1]._id + 1 : 0;
     setTasks([...tasks, { _id, subject, done: false }]);
   };
+  let count = tasks.filter((task) => task.done === false).length;
   return (
-    <div>
-      <Header />
+    <Box sx={{ mx: { lg: 20, md: 10 } }}>
+      <Header count={count} />
       <Container>
-        <CssBaseline />
         {/* not a component , for margin and padding  */}
 
         <h1>React Todo</h1>
         <Form addTask={addTask} />
-        <ul>
+        <List>
           {tasks
             .filter((task) => task.done)
             .map((task) => {
@@ -51,9 +49,9 @@ const App = () => {
                 />
               );
             })}
-        </ul>
+        </List>
         <br />
-        <ul>
+        <List>
           {tasks
             .filter((task) => !task.done)
             .map((task) => {
@@ -66,9 +64,9 @@ const App = () => {
                 />
               );
             })}
-        </ul>
+        </List>
       </Container>
-    </div>
+    </Box>
   );
 };
 

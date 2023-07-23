@@ -1,4 +1,11 @@
 import React, { useRef } from "react";
+import {
+  FormControl,
+  OutlinedInput,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import { Add as AddIcon } from "@mui/icons-material";
 
 const Form = ({ addTask }) => {
   const input = useRef();
@@ -9,11 +16,21 @@ const Form = ({ addTask }) => {
         const subject = input.current.value;
         addTask(subject);
         input.current.value = "";
-        input.focus();
+        input.current.focus();
       }}
     >
-      <input type="text" placeholder="Add new task" ref={input}></input>
-      <button>Add</button>
+      <FormControl fullWidth>
+        <OutlinedInput
+          inputRef={input}
+          endAdornment={
+            // <InputAdornment position="start">
+            <IconButton type="submit">
+              <AddIcon />
+            </IconButton>
+            // </InputAdornment>
+          }
+        ></OutlinedInput>
+      </FormControl>
     </form>
   );
 };

@@ -1,30 +1,34 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import { Badge, Typography, Toolbar, Box, AppBar, Button } from "@mui/material";
+import { ThemeContext } from "./ThemeApp";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar({ count }) {
+  const { setMode, mode } = React.useContext(ThemeContext);
+  function changeMode() {
+    setMode(mode === "dark" ? "light" : "dark");
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Badge badgeContent={count} color="error" sx={{ mr: 2 }}>
+            <FormatListBulletedIcon />
+          </Badge>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            Todos
           </Typography>
-          <Button color="inherit">Login</Button>
+          {mode === "dark" ? (
+            <Button color="inherit" onClick={changeMode}>
+              <LightModeIcon />
+            </Button>
+          ) : (
+            <Button color="inherit" onClick={changeMode}>
+              <DarkModeIcon />
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
