@@ -1,7 +1,11 @@
 import { createRef, useState } from "react";
 import "./App.css";
 import Item from "./Item";
+import Header from "./Header";
+import { createContext } from "react";
 
+//create context
+export const AppContext = createContext();
 function App() {
   const input = createRef();
   const [data, setData] = useState([
@@ -16,10 +20,12 @@ function App() {
     let id = data[data.length - 1].id + 1;
     setData([...data, { id, name, status: false }]);
   };
-
+  function clear() {
+    setData([]);
+  }
   return (
-    <div>
-      <h1>List ({data.length})</h1>
+    <AppContext.Provider value={clear}>
+      <Header />
       <ol>
         {data.map((item) => {
           return <Item user={item} remove={remove} key={item.id} />;
@@ -37,7 +43,7 @@ function App() {
         <input type="text" placeholder="Add new list..." ref={input}></input>
         <button type="submit">Add</button>
       </form>
-    </div>
+    </AppContext.Provider>
   );
 }
 
