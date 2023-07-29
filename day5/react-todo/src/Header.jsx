@@ -1,27 +1,49 @@
-import * as React from "react";
+import { useState, useContext } from "react";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import { Badge, Typography, Toolbar, Box, AppBar, Button } from "@mui/material";
+import {
+  Badge,
+  Typography,
+  Toolbar,
+  Box,
+  AppBar,
+  Button,
+  IconButton,
+  MenuItem,
+  Menu,
+  Fade,
+} from "@mui/material";
 import { ThemeContext } from "./ThemeApp";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import { delay, motion } from "framer-motion";
-import { Rotate90DegreesCcw } from "@mui/icons-material";
+import { motion } from "framer-motion";
+import {
+  Menu as MenuIcon,
+  MoreVert as MoreVertIcon,
+} from "@mui/icons-material";
+export default function Header({ count, clear, toggleDrawer }) {
+  const { setMode, mode } = useContext(ThemeContext);
 
-export default function ButtonAppBar({ count }) {
-  const { setMode, mode } = React.useContext(ThemeContext);
   function changeMode() {
     setMode(mode === "dark" ? "light" : "dark");
   }
+  const [openMenu, setOpenMenu] = useState();
+  const handleClick = (event) => {
+    setOpenMenu(event.currentTarget);
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Badge badgeContent={count} color="error" sx={{ mr: 2 }}>
-            <FormatListBulletedIcon />
-          </Badge>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Todos
-          </Typography>
+          <IconButton onClick={toggleDrawer()}>
+            <MenuIcon />
+          </IconButton>
+          <Box sx={{ flexGrow: 1 }}>
+            <Badge badgeContent={count} color="error" sx={{ mr: 2 }}>
+              <Typography variant="h6" component="div">
+                Todos
+              </Typography>
+            </Badge>
+          </Box>
           {mode === "dark" ? (
             <Button color="inherit" onClick={changeMode}>
               <motion.div
@@ -41,6 +63,31 @@ export default function ButtonAppBar({ count }) {
               </motion.div>
             </Button>
           )}
+          <Box>
+            <IconButton onClick={handleClick}>
+              <MoreVertIcon />
+            </IconButton>
+
+            <Menu
+              id="fade-menu"
+              MenuListProps={{
+                "aria-labelledby": "fade-button",
+              }}
+              anchorEl={openMenu}
+              open={Boolean(openMenu)}
+              onClose={() => setOpenMenu(false)}
+              TransitionComponent={Fade}
+            >
+              <MenuItem
+                onClick={() => {
+                  setOpenMenu(null);
+                  clear();
+                }}
+              >
+                Clear
+              </MenuItem>
+            </Menu>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>
