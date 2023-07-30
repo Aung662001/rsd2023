@@ -1,49 +1,41 @@
-import { createRef, useState } from "react";
-import "./App.css";
-import Item from "./Item";
-import Header from "./Header";
-import { createContext } from "react";
-
+// import "./App.css";
+import { Link, Outlet } from "react-router-dom";
+import Todo from "./Todo";
+import { AppContext } from "./ContextProvider";
+import { useContext } from "react";
 //create context
-export const AppContext = createContext();
 function App() {
-  const input = createRef();
-  const [data, setData] = useState([
-    { id: 1, name: "Aung", status: false },
-    { id: 2, name: "Maung", status: false },
-    { id: 3, name: "Kaung", status: false },
-  ]);
-  const remove = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
-  const addnew = (name) => {
-    let id = data[data.length - 1].id + 1;
-    setData([...data, { id, name, status: false }]);
-  };
-  function clear() {
-    setData([]);
-  }
+  const { clear, data } = useContext(AppContext);
   return (
-    <AppContext.Provider value={clear}>
-      <Header />
-      <ol>
-        {data.map((item) => {
-          return <Item user={item} remove={remove} key={item.id} />;
-        })}
-      </ol>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log(input.current.value);
-          addnew(input.current.value);
-          input.current.value = "";
-          input.current.focus();
-        }}
-      >
-        <input type="text" placeholder="Add new list..." ref={input}></input>
-        <button type="submit">Add</button>
-      </form>
-    </AppContext.Provider>
+    <>
+      <div>
+        <h1>About</h1>
+        <ul>
+          <li>
+            <Link to={"/"}>Home</Link>
+          </li>
+          <li>
+            <Link to={"/about"}>About</Link>
+          </li>
+          <li>
+            <Link to={"/todo"}>Todo</Link>
+          </li>
+          <li>
+            User
+            <ul>
+              <li>
+                <Link to={"/user/alice"}>Alice</Link>
+              </li>
+              <li>
+                <Link to={"/user/bob"}>Bob</Link>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <hr></hr>
+      <Outlet />
+    </>
   );
 }
 
