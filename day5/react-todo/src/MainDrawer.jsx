@@ -58,7 +58,7 @@ const MainDrawer = ({ showDrawer, setShowDrawer, toggleDrawer }) => {
                 <ListItemButton>
                   <ListItemIcon>
                     <MailIcon />
-                    <ListItemText primary="Contace" />
+                    <ListItemText primary="Contact" />
                   </ListItemIcon>
                 </ListItemButton>
               </Link>

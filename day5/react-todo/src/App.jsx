@@ -1,20 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Item from "./Item";
 import Form from "./Form";
 import Header from "./Header";
 import { Box, Container, List } from "@mui/material";
 import MainDrawer from "./MainDrawer";
+const URL = "http://localhost:4000/tasks";
 const App = () => {
   const [showDrawer, setShowDrawer] = useState(false);
-
-  const [tasks, setTasks] = useState([
-    { _id: 1, subject: "Milk", done: false },
-    { _id: 2, subject: "Banana", done: true },
-    { _id: 3, subject: "Mango", done: false },
-    { _id: 4, subject: "Egg", done: true },
-  ]);
+  useEffect(() => {
+    fetch(URL)
+      .then((response) => response.json())
+      .then((data) => setTasks(data));
+  }, []);
+  const [tasks, setTasks] = useState([]);
   const clear = () => setTasks(tasks.filter((task) => !task.done));
   const toggleTask = (_id) => {
+    //fetch endpoint
+    fetch(`${URL}/${_id}/toggle`, {
+      method: "PUT",
+    });
+    //
     setTasks(
       tasks.map((task) => {
         if (task._id === _id) {
