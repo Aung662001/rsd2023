@@ -17,7 +17,10 @@ export const todoSlice = createSlice({
       const id = state.tasks.length
         ? state.tasks[state.tasks.length - 1].id + 1
         : 1;
-      state.tasks = [...state.tasks, { id, subject: action.payload }];
+      state.tasks = [
+        ...state.tasks,
+        { id, subject: action.payload, done: false },
+      ];
     },
     del: (state, action) => {
       state.tasks = state.tasks.filter((item) => item.id !== action.payload);

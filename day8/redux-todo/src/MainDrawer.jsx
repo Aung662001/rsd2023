@@ -32,7 +32,7 @@ const MainDrawer = ({ showDrawer, setShowDrawer, toggleDrawer }) => {
             </Box>
 
             <ListItem sx={{ marginTop: 8 }}>
-              <Link to="/">
+              <Link to="/" onClick={toggleDrawer()}>
                 <ListItemButton>
                   <ListItemIcon>
                     <HomeIcon />
@@ -43,7 +43,7 @@ const MainDrawer = ({ showDrawer, setShowDrawer, toggleDrawer }) => {
             </ListItem>
 
             <ListItem>
-              <Link to="/about">
+              <Link to="/about" onClick={toggleDrawer()}>
                 <ListItemButton>
                   <ListItemIcon>
                     <AccountCircleIcon />
@@ -54,7 +54,7 @@ const MainDrawer = ({ showDrawer, setShowDrawer, toggleDrawer }) => {
             </ListItem>
 
             <ListItem>
-              <Link to="/contact">
+              <Link to="/contact" onClick={toggleDrawer()}>
                 <ListItemButton>
                   <ListItemIcon>
                     <MailIcon />

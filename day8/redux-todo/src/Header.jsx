@@ -1,5 +1,4 @@
 import { useState, useContext } from "react";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import {
   Badge,
   Typography,
@@ -22,8 +21,10 @@ import {
 } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { clear } from "../src/features/todo/todoSlice";
+import { useLocation } from "react-router-dom";
 export default function Header({ count, toggleDrawer }) {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const { setMode, mode } = useContext(ThemeContext);
 
   function changeMode() {
@@ -67,32 +68,34 @@ export default function Header({ count, toggleDrawer }) {
               </motion.div>
             </Button>
           )}
-          <Box>
-            <IconButton onClick={handleClick}>
-              <MoreVertIcon />
-            </IconButton>
+          {pathname === "/" && (
+            <Box>
+              <IconButton onClick={handleClick}>
+                <MoreVertIcon />
+              </IconButton>
 
-            <Menu
-              id="fade-menu"
-              MenuListProps={{
-                "aria-labelledby": "fade-button",
-              }}
-              anchorEl={openMenu}
-              open={Boolean(openMenu)}
-              onClose={() => setOpenMenu(false)}
-              TransitionComponent={Fade}
-            >
-              <MenuItem
-                onClick={() => {
-                  setOpenMenu(null);
-                  // clear();
-                  dispatch(clear());
+              <Menu
+                id="fade-menu"
+                MenuListProps={{
+                  "aria-labelledby": "fade-button",
                 }}
+                anchorEl={openMenu}
+                open={Boolean(openMenu)}
+                onClose={() => setOpenMenu(false)}
+                TransitionComponent={Fade}
               >
-                Clear
-              </MenuItem>
-            </Menu>
-          </Box>
+                <MenuItem
+                  onClick={() => {
+                    setOpenMenu(null);
+                    // clear();
+                    dispatch(clear());
+                  }}
+                >
+                  Clear
+                </MenuItem>
+              </Menu>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
