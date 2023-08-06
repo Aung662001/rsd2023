@@ -1,0 +1,7 @@
+work in day5 foder
+redux lesson
+dispatch=>action=>CRUD data
+cann't access data directly from state Container and can only get from using dispatch and trigger actions(add,delete,create,update,etc...)=> call reducers functions
+
+
+react-toolkit doc -> https://redux-toolkit.js.org/tutorials/quick-start
