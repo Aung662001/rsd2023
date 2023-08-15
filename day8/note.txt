@@ -5,3 +5,7 @@ cann't access data directly from state Container and can only get from using dis
 
 
 react-toolkit doc -> https://redux-toolkit.js.org/tutorials/quick-start
+
+day 9 note
+tenery operator and &&
+cors -> access control allow origin(req header) -> 

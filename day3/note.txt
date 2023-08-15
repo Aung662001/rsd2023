@@ -1,0 +1,16 @@
+ln -- shortcut 
+ln -s -- if the file move also refrenct 
+// filed permession
+   1-read 
+   2-write
+   4-execute
+   command=> chmod 1 folderName   -->to change permession
+   command=> ls -la -->to view permession
+   eg for all permession ==>chmod 777 folderName  --->for three type of user
+-->which php , which node , which python,
+-->wget link --->to downloadfiles
+-->wget -c --->if not finish previous continu to downloadfiles
+---> sudo apt autoremove -->to remove unneeded files
+--> ssh use to enter server
+-->scp filepath  serverAddress--> use to send file to server 
+scp pwd2023.pdf root@emaung.com:/var/www/emaung/com

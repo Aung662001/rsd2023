@@ -1,0 +1,11 @@
+mongosh
+mongod --dbpath/data/
+sudo mongod /user/
+
+//
+show dbs
+use dbName
+db.tasks.insertOne({})
+db.tasks.find()
+db.tasks.find().sort({subject: 1}) //-1
+curl -X POST localhost:3500/users -d subject=Milk -v

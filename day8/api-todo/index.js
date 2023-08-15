@@ -17,21 +17,24 @@ const db = mongo.db("todo"); //mongo database name
 
 //endpoints
 app.get("/tasks", async function (req, res) {
-  const data = await db.collection("tasks").find().toArray();
-  res.json(data);
+  try {
+    const data = await db.collection("tasks").find().toArray();
+    setTimeout(() => {
+      res.json(data);
+    }, 2000);
+  } catch (err) {
+    res.status(500).json({ message: "Server Error" });
+  }
 });
 app.post("/tasks", async function (req, res) {
   const { subject } = req.body;
   if (!subject)
-    return res.sendStatus(400).json({ message: "Subject field required." });
+    return res.status(400).json({ message: "Subject field required." });
   try {
-    const result = await db
-      .collection("tasks")
-      .insertOne({ subject, done: false });
-    const data = await db
-      .collection("tasks")
-      .findOne({ _id: new ObjectId(result.insertedId) });
-    res.json(data);
+    const insertData = { subject, done: false };
+    const result = await db.collection("tasks").insertOne({ ...insertData });
+
+    res.json({ _id: result.insertedId, ...insertData });
   } catch (err) {
     console.log(err.message);
     res.sendStatus(500);
@@ -40,11 +43,11 @@ app.post("/tasks", async function (req, res) {
 //toggle done
 app.put("/tasks/:id/toggle", async function (req, res) {
   const { id } = req.params;
-  const data = await db.collection("tasks").findOne({ _id: new ObjectId(id) });
-  if (!data) return res.status(400).json({ message: "Subject Not found.." }); //check existing in db
   const result = await db
     .collection("tasks")
-    .updateOne({ _id: new ObjectId(id) }, { $set: { done: !data.done } });
+    .updateOne({ _id: new ObjectId(id) }, [
+      { $set: { done: { $not: "$done" } } },
+    ]);
   res.json(result);
 });
 //delete endpoint

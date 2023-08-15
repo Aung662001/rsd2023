@@ -14,7 +14,7 @@ const Item = ({ task }) => {
   return (
     <ListItem>
       <ListItemIcon>
-        <IconButton onClick={() => dispatch(toggleDone(task.id))}>
+        <IconButton onClick={() => dispatch(toggleDone(task._id))}>
           {task.done ? (
             <Checkbox edge="start" checked={true} tabIndex={-1} disableRipple />
           ) : (
@@ -24,7 +24,7 @@ const Item = ({ task }) => {
       </ListItemIcon>
       <ListItemText primary={task.subject} />
       <ListItemIcon>
-        <IconButton onClick={() => dispatch(del(task.id))}>
+        <IconButton onClick={() => dispatch(del(task._id))}>
           <DeleteIcon color="error" />
         </IconButton>
       </ListItemIcon>

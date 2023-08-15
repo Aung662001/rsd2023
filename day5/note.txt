@@ -1,0 +1,30 @@
+1.react =>compound of components
+react component structure is waterfall form
+state=>props=>state/ only up to down on way (props=>read only)
+props go step by step (no jump over)
+
+
+2.redux
+compound state
+
+
+
+
+3.content
+jump props one to another
+
+
+
+
+
+4.next.js
+page base structure
+
+
+
+react component => one element return => receive data as props 
+
+
+react design framework /mui/ant design / mantine
+//npm install @mui/material @emotion/react @emotion/styled
+//npm install @mui/icons-material

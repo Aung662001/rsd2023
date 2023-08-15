@@ -7,34 +7,70 @@ import MainDrawer from "./MainDrawer";
 const URL = "http://localhost:4000/tasks";
 const App = () => {
   const [showDrawer, setShowDrawer] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    const response = await fetch(URL);
+    if (response.ok) {
+      const data = await response.json();
+      setTasks(data);
+      setIsLoading(false);
+    } else {
+      setError(true);
+      setIsLoading(false);
+    }
+  };
   useEffect(() => {
-    fetch(URL)
-      .then((response) => response.json())
-      .then((data) => setTasks(data));
+    fetchData();
   }, []);
   const [tasks, setTasks] = useState([]);
-  const clear = () => setTasks(tasks.filter((task) => !task.done));
-  const toggleTask = (_id) => {
+  const clear = async () => {
+    const res = await fetch(URL, {
+      method: "DELETE",
+    });
+    if (res.ok) {
+      setTasks(tasks.filter((task) => !task.done));
+    }
+  };
+  const toggleTask = async (_id) => {
     //fetch endpoint
-    fetch(`${URL}/${_id}/toggle`, {
+    const res = await fetch(`${URL}/${_id}/toggle`, {
       method: "PUT",
     });
     //
-    setTasks(
-      tasks.map((task) => {
-        if (task._id === _id) {
-          task.done = !task.done;
-        }
-        return task;
-      })
-    );
+    if (res.ok) {
+      setTasks(
+        tasks.map((task) => {
+          if (task._id === _id) {
+            task.done = !task.done;
+          }
+          return task;
+        })
+      );
+    }
   };
-  const deleteTask = (_id) => {
-    setTasks(tasks.filter((task) => task._id !== _id));
+  const deleteTask = async (_id) => {
+    const res = await fetch(`${URL}/${_id}`, {
+      method: "DELETE",
+    });
+    if (res.ok) {
+      setTasks(tasks.filter((task) => task._id !== _id));
+    }
   };
-  const addTask = (subject) => {
-    const _id = tasks.length ? tasks[tasks.length - 1]._id + 1 : 0;
-    setTasks([...tasks, { _id, subject, done: false }]);
+  const addTask = async (subject) => {
+    const response = await fetch(URL, {
+      method: "POST",
+      body: JSON.stringify({ subject }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setTasks([...tasks, { ...data }]);
+    }
   };
   let count = tasks.filter((task) => task.done === false).length;
   //for sidebar open and close
@@ -56,10 +92,11 @@ const App = () => {
         toggleDrawer={toggleDrawer}
       />
       <Header count={count} clear={clear} toggleDrawer={toggleDrawer} />
-      <Container>
+      <Container sx={{ marginBottom: 5 }}>
+        {isLoading && <div>Loading...</div>}
+        {error && <div>Error</div>}
         {/* not a component , for margin and padding  */}
 
-        <h1>React Todo</h1>
         <Form addTask={addTask} />
         <List>
           {tasks

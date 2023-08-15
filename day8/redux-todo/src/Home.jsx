@@ -16,7 +16,7 @@ const Home = () => {
         {tasks
           .filter((task) => task.done)
           .map((task) => {
-            return <Item task={task} key={task.id} />;
+            return <Item task={task} key={task._id} />;
           })}
       </List>
       <br />
@@ -24,7 +24,7 @@ const Home = () => {
         {tasks
           .filter((task) => !task.done)
           .map((task) => {
-            return <Item task={task} key={task.id} />;
+            return <Item task={task} key={task._id} />;
           })}
       </List>
     </Container>

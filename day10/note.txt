@@ -1,0 +1,8 @@
+React, NextJs(Remix)
+React Native 
+Redux
+express(fastify,nest)
+Node(Deno?, Bun?)
+Mongo(Prisma)
+Mui(Radix)
+Fetch(React-quary , SWR)

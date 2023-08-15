@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { add } from "./features/todo/todoSlice";
+import { addTasks } from "./features/todo/todoSlice";
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const Form = () => {
             // <InputAdornment position="start">
             <IconButton
               type="submit"
-              onClick={() => dispatch(add(input.current.value))}
+              onClick={() => dispatch(addTasks(input.current.value))}
             >
               <AddIcon />
             </IconButton>
